@@ -1,13 +1,9 @@
-<%-- 
-    Document   : Courses
-    Created on : May 13, 2023, 2:23:34 PM
-    Author     : rohan
---%>
-
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="dao.CourseDao"%>
+<%@page import="dao.StudentDao"%>
+<%@page import="entities.Student"%>
 <%@page import="entities.Course"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="dao.CourseDao"%>
 <%@page import="helper.SessionData"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="Navbar.jsp"%>
@@ -15,15 +11,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>JSP Page</title>        
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/courses.css">
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/newCourses.css">
     </head>
     <body>
-        <br><br>
-        <%//            Getting Session
+        <%//            Getting user data
             SessionData sd = new SessionData();
             String username = sd.getUname(request);
             String role = sd.getRole(request);
@@ -32,126 +27,174 @@
             CourseDao cd = new CourseDao();
             List<Course> courses = new ArrayList<>();
             courses = cd.getAllCourses();
+
+            List<Course> registeredCourses = new ArrayList<>();
+            List<Course> TeacherCourses = new ArrayList<>();;
+//          fetching Student's registered courses data
+            if (role.equals("student")) {
+                registeredCourses = cd.getRegisteredCourses(username);
+            } //          fetching Teacher's registered courses data
+            else if (role.equals("teacher")) {
+                TeacherCourses = cd.getCoursesTeaching(username);
+            }
         %>
 
-        <div class="getAllCourses">
-            <h2>Courses</h2>
 
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Course Code</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Credits</th>
-                        <th scope="col">Teacher</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-//                      Displaying all courses 
-                        for (Course course : courses) {
-                    %>
-                    <tr>
-                        <td> <%= course.code%> </td>
-                        <td> <%= course.title%> </td>
-                        <td> <%= course.credit%> </td>
-                        <td> <%= course.teacher%> </td>
-                    </tr>
-                    <%
-                        }
-                    %>
-                </tbody>
-            </table>
-        </div>
+        <br><br>
 
 
-        <!--Add Course-->     
+
+
+        <!-- Displaying Student's registered course-->
         <%
-            if (role.equals("admin")) {
+            if (role.equals("student")) {
         %>
-   
-        <div id="addCourses">
-            <button type="button">Add Course</button>
+        <h2>Registered Courses</h2>
+        <div class="row row-cols-1 row-cols-md-4 g-4" id="card-group">
+            <%
+                for (Course course : registeredCourses) {
+                    String[] courseCode = course.code.split(" ", 2);
+            %>
+            <div class="col">
+                <div class="card text-dark bg-primary mb-3" style="min-height: 200px">
+                    <div class="card-body bg-info ">
+                        <h5 class="card-header"><b><%=course.code%>:</b> <%=course.title%></h5>
+                        <div class="card-text"><%=course.teacherName%></div>
+                        <div class="card-text"><%=course.credit%></div>
+                    </div>
+                </div>
+            </div>
+            <%
+                }
+            %>
         </div>
         <%
             }
         %>
 
-        <div class="registeredCourses">
-            <%
-//                Fetching My Courses of a Student
-                if (role.equals("student")) {
-                    List<Course> myCourses = new ArrayList<>();
-                    myCourses = cd.getRegisteredCourses(username);
-            %>
-            <h2>Registered Courses</h2>
 
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Course Code</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Credits</th>
-                        <th scope="col">Teacher</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-//                      Displaying courses of a Student
-                        for (Course course : myCourses) {
-                    %>
-                    <tr>
-                        <td> <%= course.code%> </td>
-                        <td> <%= course.title%> </td>
-                        <td> <%= course.credit%> </td>
-                        <td> <%= course.teacher%> </td>
-                    </tr>
-                    <%
-                            }
-                        }
-                    %>                
-                </tbody>
-            </table>
-        </div>
-        <div class="courses teaching">
+        <!--Teachers courses-->
+        <%
+            if (role.equals("teacher")) {
+        %>
+        <h2>My Courses</h2>
+        <div class="row row-cols-1 row-cols-md-4 g-4" id="card-group">
             <%
-//                Fetching My Courses of a Student
-                if (role.equals("teacher")) {
-                    List<Course> myCourses = new ArrayList<>();
-                    myCourses = cd.getCoursesTeaching(username);
+                for (Course course : TeacherCourses) {
+                    String[] courseCode = course.code.split(" ", 2);
             %>
-            <h2>My Courses</h2>
+            <div class="col">
+                <div class="card text-dark bg-primary mb-3" style="min-height: 200px">
+                    <div class="card-body bg-info ">
+                        <h5 class="card-header"><b><%=course.code%>:</b> <%=course.title%></h5>
+                        <div class="card-text"></div>
 
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Course Code</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Credits</th>
-                        <th scope="col">Students</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-//                      Displaying courses of a Student
-                        for (Course course : myCourses) {
-                    %>
-                    <tr>
-                        <td> <%= course.code%> </td>
-                        <td> <%= course.title%> </td>
-                        <td> <%= course.credit%> </td>
-                        <td> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                                Students
-                            </button>
-                        </td>
-                    </tr>
-                    <%
-                            }
-                        }
-                    %>                
-                </tbody>
-            </table>
+
+                        <!--Get Students button-->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal<%=courseCode[0] + courseCode[1]%>">
+                            Students
+                        </button>
+                        <%
+                            // fetching students enrolled in this course
+                            List<Student> students = new ArrayList<>();
+                            StudentDao studentDao = new StudentDao();
+                            students = studentDao.getStudents(course.code);
+                        %>
+                        <!--Students button calls this modal-->
+                        <div class="modal fade" id="exampleModal<%=courseCode[0] + courseCode[1]%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+
+                                        <!--table of enrolled students inside modal-->
+                                        <table class="table table-striped">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">ID</th>
+                                                    <th scope="col">Department</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <%
+                                                    //                      Displaying courses of a Student
+                                                    for (Student student : students) {
+                                                %>
+                                                <tr>
+                                                    <td> <%= student.fullName%> </td>
+                                                    <td> <%= student.id%> </td>
+                                                    <td> <%= student.dept%> </td>
+                                                </tr>
+                                                <%
+                                                    }
+                                                    //}
+                                                %>                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%
+                }
+            %>
         </div>
+        <%
+            }
+        %>
+
+        <!--- All courses-->
+        <h2>All Courses</h2>
+        <div class="row row-cols-1 row-cols-md-4 g-4" id="card-group">
+            <%                for (Course course : courses) {
+                    String[] courseCode = course.code.split(" ", 2);
+            %>
+            <div class="col">
+                <div class="card text-dark bg-primary mb-3" style="min-height: 200px">
+                    <div class="card-body bg-info ">
+                        <h5 class="card-header"><b><%=course.code%>:</b> <%=course.title%></h5>
+                        <div class="card-text"><%=course.teacherName%></div>
+                        <div class="card-text"><%=course.dept%></div>
+
+                        <!--Enroll button-->
+                        <%if (role.equals("student") && cd.isEnrolled(registeredCourses, course.code) == false) {%>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal<%=courseCode[0] + courseCode[1]%>">
+                            Enroll
+                        </button>
+
+                        <!--Enroll button calls this modal-->
+                        <div class="modal fade" id="exampleModal<%=courseCode[0] + courseCode[1]%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        Do you really want to enroll in <%=course.code%>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="addCourse?dept=<%=courseCode[0]%>&code=<%=courseCode[1]%>" class="btn btn-primary">Yes</a>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+            <%
+                }
+            %>
+        </div>
+
+
+
+
+
 
     </body>
 </html>
