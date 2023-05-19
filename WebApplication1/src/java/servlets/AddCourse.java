@@ -10,6 +10,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.*;
+import java.util.logging.Level;
+import dao.CourseDao;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AddCourse extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
@@ -30,10 +34,23 @@ public class AddCourse extends HttpServlet {
             out.println("<body>");
             
             String dept = request.getParameter("dept");
-            String courseCode = request.getParameter("courseCode");
+            String code = request.getParameter("courseCode");
+            String courseCode = dept+" "+code;
             String courseTitle = request.getParameter("courseTitle");
             String teacherUsername = request.getParameter("teacherUsername");
-            int credit = Integer.parseInt(request.getParameter("credit"));
+            String credit = request.getParameter("credit");
+//            out.println(dept);
+//            out.println(courseCode);
+//            out.println(courseTitle);
+//            out.println(credit);
+//            out.println(teacherUsername);
+            
+            
+            // create new course and assign teacher
+            CourseDao courseDao = new CourseDao();
+            courseDao.addCourse(courseCode,courseTitle,teacherUsername,credit);
+            response.sendRedirect("Courses.jsp");
+            
 
             out.println("</body>");
             out.println("</html>");
@@ -43,7 +60,11 @@ public class AddCourse extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(AddCourse.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
