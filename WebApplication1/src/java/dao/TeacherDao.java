@@ -12,7 +12,7 @@ public class TeacherDao {
     String query;
 
     public List<Teacher> getAllTeachers() throws SQLException {
-        query = "select full_name,dept,number,email from Teacher;";
+        query = "select full_name,dept,number,email,user_name from Teacher;";
         Connection con = Jdbc.getConnection();
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery(query);
@@ -20,11 +20,12 @@ public class TeacherDao {
         List<Teacher> teachers = new ArrayList<>();
 
         while (rs.next()) {
-            String name = rs.getString(1);
+            String fullName = rs.getString(1);
             String dept = rs.getString(2);
             String number = rs.getString(3);
             String email = rs.getString(4);
-            Teacher teacher = new Teacher(name,dept,number,email);
+            String userName = rs.getString(5);
+            Teacher teacher = new Teacher(userName,fullName,dept,number,email);
             teachers.add(teacher);
         }
         return teachers;

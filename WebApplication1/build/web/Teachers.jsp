@@ -33,7 +33,7 @@
                 <div class="card">
                     <img src="img/RabbiSir.png" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title"><%=teacher.name%></h5>
+                        <h5 class="card-title"><%=teacher.fullName%></h5>
                         <p class="card-text">Professor</p>
                         <a href="mailto: <%=teacher.email%>" class="btn btn-primary">Mail</a>
                     </div>
@@ -49,7 +49,7 @@
                 <div class="card">
                     <img src="img/RabbiSir.png" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title"><%=teacher.name%></h5>
+                        <h5 class="card-title"><%=teacher.fullName%></h5>
                         <p class="card-text">Professor</p>
                         <a href="mailto: <%=teacher.email%>" class="btn btn-primary">Mail</a>
                     </div>
@@ -65,7 +65,7 @@
                 <div class="card">
                     <img src="img/RabbiSir.png" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title"><%=teacher.name%></h5>
+                        <h5 class="card-title"><%=teacher.fullName%></h5>
                         <p class="card-text">Professor</p>
                         <a href="mailto: <%=teacher.email%>" class="btn btn-primary">Mail</a>
                     </div>

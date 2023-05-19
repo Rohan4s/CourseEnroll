@@ -8,6 +8,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <img src="img/hp2.png" class="img1"/>
+        <!--<img src="img/hp2.png" class="img1"/>-->
     </body>
 </html>
