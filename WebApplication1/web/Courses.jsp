@@ -1,3 +1,5 @@
+<%@page import="entities.Teacher"%>
+<%@page import="dao.TeacherDao"%>
 <%@page import="dao.StudentDao"%>
 <%@page import="entities.Student"%>
 <%@page import="entities.Course"%>
@@ -23,6 +25,13 @@
             String username = sd.getUname(request);
             String role = sd.getRole(request);
 
+//      Fetching All teachers data for admin to assign course
+            TeacherDao teacherDao = new TeacherDao();
+            List<Teacher> teachers = new ArrayList<>();
+            if (role.equals("admin")) {
+                teachers = teacherDao.getAllTeachers();
+            }
+
 //            Fetching All courses data
             CourseDao cd = new CourseDao();
             List<Course> courses = new ArrayList<>();
@@ -30,6 +39,7 @@
 
             List<Course> registeredCourses = new ArrayList<>();
             List<Course> TeacherCourses = new ArrayList<>();;
+
 //          fetching Student's registered courses data
             if (role.equals("student")) {
                 registeredCourses = cd.getRegisteredCourses(username);
@@ -176,7 +186,7 @@
                                         Do you really want to enroll in <%=course.code%>?
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="addCourse?dept=<%=courseCode[0]%>&code=<%=courseCode[1]%>" class="btn btn-primary">Yes</a>
+                                        <a href="enrollCourse?dept=<%=courseCode[0]%>&code=<%=courseCode[1]%>" class="btn btn-primary">Yes</a>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                     </div>
                                 </div>
@@ -190,6 +200,63 @@
                 }
             %>
         </div>
+
+        <h2>Add Courses</h2>
+        <%if (role.equals("admin")) {%>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+            Add Course
+        </button>
+
+        <!--Add Course button calls this modal-->
+        <div class="modal fade" id="addCourseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <form action="AddCourse" method="post">
+                        <div class="modal-body">
+
+                            <div class="form-group form-floating mb-3">
+                                <input type="text" class="form-control" id="dept"  required  placeholder="CSE" name="dept">
+                                <label for="dept">Department Name</label>
+                            </div>
+                            
+                            <div class="form-group form-floating mb-3">
+                                <input type="text" class="form-control" id="courseCode" required placeholder="137" pattern="\d{3}" name="courseCode">
+                                <label for="courseCode">Course Code (must contain exactly 3 digits)</label>
+                            </div>
+                            <div class="form-group form-floating mb-3">
+                                <input type="text" class="form-control" id="courseTitle"  required placeholder="Structured Programming Language" name="courseTitle">
+                                <label for="courseTitle">Course Title</label>
+                            </div>
+                            <select class="form-control form-control-sm" name="teacherUsername" required>
+                                <option value="" selected disabled hidden>--Select A Teacher--</option>
+                                <%
+                                    for (Teacher teacher : teachers) {
+                                %>
+                                <option><%=teacher.name%></option>
+                                <%
+                                    }
+                                %>
+                            </select>
+                            <br>
+                            <div class="form-group form-floating mb-3 " style="width: 22rem;">
+                                <input min="1" max="20" type="number" id="typeNumber" placeholder="Credit" class="form-control"  required/>
+                                <label for="typeNumber">Credit (1-20) </label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="text" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <%}%>
+
+
+
+
 
 
 

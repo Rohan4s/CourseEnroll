@@ -9,8 +9,12 @@
         <servlet-class>servlets.LoginServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>addCourse</servlet-name>
+        <servlet-name>enrollCourse</servlet-name>
         <servlet-class>servlets.EnrollCourse</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddCourse</servlet-name>
+        <servlet-class>servlets.AddCourse</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>index</servlet-name>
@@ -21,8 +25,12 @@
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>addCourse</servlet-name>
-        <url-pattern>/addCourse</url-pattern>
+        <servlet-name>enrollCourse</servlet-name>
+        <url-pattern>/enrollCourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCourse</servlet-name>
+        <url-pattern>/AddCourse</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
