@@ -1,3 +1,5 @@
+<%@page import="entities.Teacher"%>
+<%@page import="dao.TeacherDao"%>
 <%@page import="dao.StudentDao"%>
 <%@page import="entities.Student"%>
 <%@page import="entities.Course"%>
@@ -15,13 +17,20 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/newCourses.css">
+        <link rel="stylesheet" href="css/courses.css">
     </head>
     <body>
         <%//            Getting user data
             SessionData sd = new SessionData();
             String username = sd.getUname(request);
             String role = sd.getRole(request);
+
+//      Fetching All teachers data for admin to assign course
+            TeacherDao teacherDao = new TeacherDao();
+            List<Teacher> teachers = new ArrayList<>();
+            if (role.equals("admin")) {
+                teachers = teacherDao.getAllTeachers();
+            }
 
 //            Fetching All courses data
             CourseDao cd = new CourseDao();
@@ -30,6 +39,7 @@
 
             List<Course> registeredCourses = new ArrayList<>();
             List<Course> TeacherCourses = new ArrayList<>();;
+
 //          fetching Student's registered courses data
             if (role.equals("student")) {
                 registeredCourses = cd.getRegisteredCourses(username);
@@ -42,7 +52,59 @@
 
         <br><br>
 
+        <!--Add new courses by admin -->
+        <%if (role.equals("admin")) {%>
+        <div class="text-center">
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+                Add Course
+            </button>
+        </div>
+        <!--Add Course button calls this modal-->
+        <div class="modal fade " id="addCourseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
 
+                    <form action="AddCourse" method="post">
+                        <div class="modal-body">
+
+                            <div class="form-group form-floating mb-3">
+                                <input type="text" class="form-control" id="dept"  required  placeholder="CSE" name="dept">
+                                <label for="dept">Department Name</label>
+                            </div>
+
+                            <div class="form-group form-floating mb-3">
+                                <input type="text" class="form-control" id="courseCode" required placeholder="137" pattern="\d{3}" name="courseCode">
+                                <label for="courseCode">Course Code (must contain exactly 3 digits)</label>
+                            </div>
+                            <div class="form-group form-floating mb-3">
+                                <input type="text" class="form-control" id="courseTitle"  required placeholder="Structured Programming Language" name="courseTitle">
+                                <label for="courseTitle">Course Title</label>
+                            </div>
+                            <select class="form-control form-control-sm" name="teacherUsername" required>
+                                <option value="" selected disabled hidden>--Select A Teacher--</option>
+                                <%
+                                    for (Teacher teacher : teachers) {
+                                %>
+                                <option><%=teacher.userName%></option>
+                                <%
+                                    }
+                                %>
+                            </select>
+                            <br>
+                            <div class="form-group form-floating mb-3 " style="width: 22rem;">
+                                <input class="form-control" type="number"  min="1" max="20" required name="credit" id="typeNumber" placeholder="Credit"   />
+                                <label for="typeNumber">Credit (1-20) </label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="text" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <%}%>
 
 
         <!-- Displaying Student's registered course-->
@@ -156,11 +218,11 @@
                     String[] courseCode = course.code.split(" ", 2);
             %>
             <div class="col">
-                <div class="card text-dark bg-primary mb-3" style="min-height: 200px">
+                <div class="card text-dark  mb-3" style="min-height: 200px">
                     <div class="card-body bg-info ">
-                        <h5 class="card-header"><b><%=course.code%>:</b> <%=course.title%></h5>
-                        <div class="card-text"><%=course.teacherName%></div>
-                        <div class="card-text"><%=course.dept%></div>
+                        <h5 class="card-header "><%=course.code%>: <%=course.title%></h5>
+                        <div class="card-text text-center mt-2"><h4>Instructor: <%=course.teacherName%></h4></div>
+                        <div class="card-text text-center"><%=course.dept%></div>
 
                         <!--Enroll button-->
                         <%if (role.equals("student") && cd.isEnrolled(registeredCourses, course.code) == false) {%>
@@ -176,7 +238,7 @@
                                         Do you really want to enroll in <%=course.code%>?
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="addCourse?dept=<%=courseCode[0]%>&code=<%=courseCode[1]%>" class="btn btn-primary">Yes</a>
+                                        <a href="enrollCourse?dept=<%=courseCode[0]%>&code=<%=courseCode[1]%>" class="btn btn-primary">Yes</a>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                     </div>
                                 </div>
@@ -190,6 +252,13 @@
                 }
             %>
         </div>
+
+
+
+
+
+
+
 
 
 

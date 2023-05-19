@@ -23,9 +23,9 @@ public class CourseDao {
             String Title = rs.getString(2);
             int credit = rs.getInt(3);
             String teacherName = rs.getString(4);
-            String teacherFullname=rs.getString(5);
+            String teacherFullname = rs.getString(5);
             String dept = rs.getString(6);
-            Course course = new Course(ID, Title, credit, teacherName,teacherFullname, dept);
+            Course course = new Course(ID, Title, credit, teacherName, teacherFullname, dept);
             courses.add(course);
         }
         return courses;
@@ -46,13 +46,12 @@ public class CourseDao {
             String Title = rs.getString(2);
             int credit = rs.getInt(3);
             String teacherName = rs.getString(4);
-            Course course = new Course(ID, Title, credit, teacherName,"",""); // TODO
+            Course course = new Course(ID, Title, credit, teacherName, "", ""); // TODO
             courses.add(course);
         }
         return courses;
     }
-    
-    
+
     public List<Course> getCoursesTeaching(String username) throws SQLException { // Get all courses a teacher is teaching
 
         query = "select ID,Title,Credit from courses where TeacherUsername=?";
@@ -67,24 +66,31 @@ public class CourseDao {
             String ID = rs.getString(1);
             String Title = rs.getString(2);
             int credit = rs.getInt(3);
-            Course course = new Course(ID, Title, credit," ","",""); //TODO
+            Course course = new Course(ID, Title, credit, " ", "", ""); //TODO
             courses.add(course);
         }
         return courses;
     }
-    
-    public Boolean isEnrolled(List<Course>registeredCourses,String courseID){
-            for(Course course:registeredCourses)
-                if(course.code.equals(courseID))
-                    return true;
-            
-            return false;
+
+    public Boolean isEnrolled(List<Course> registeredCourses, String courseID) {
+        for (Course course : registeredCourses) {
+            if (course.code.equals(courseID)) {
+                return true;
+            }
+        }
+
+        return false;
     }
-    
-    
-    void addCourse(){
-        
+
+    public void addCourse(String courseCode, String courseTitle, String teacherUsername, String credit) throws SQLException {
+        query = "insert into courses values(?,?,?,?)";
+        Connection con = Jdbc.getConnection();
+        PreparedStatement st = con.prepareStatement(query);
+        st.setString(1, courseCode);
+        st.setString(2, courseTitle);
+        st.setString(3, teacherUsername);
+        st.setString(4, credit);
+        st.executeUpdate();
     }
-    
 
 }
