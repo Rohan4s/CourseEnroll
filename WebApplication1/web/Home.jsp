@@ -8,6 +8,22 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <!--<img src="img/hp2.png" class="img1"/>-->
+        <main>
+      <div class="leftside">
+        <br><br><br>
+        <h5 class="logo">
+          Course-Enroll
+        </h5>
+        <br><br><br>
+        <h1>LEARN</h1>
+        <h1>CREATE</h1>
+        <h1>DEPLOY</h1>
+        <h3><a href="Courses.jsp">Get Started</a></h3>
+      </div>
+
+      <div class="rightside">
+        <img src="img/logo.png" >
+      </div>
+  </main>
     </body>
 </html>

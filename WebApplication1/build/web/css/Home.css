@@ -1,4 +1,64 @@
-body{
-    background-image: url("../img/hp2.png");
+/*body{
+   // background-image: url("../img/hp2.png");
     background-size: cover;
+}*/
+/**{margin:auto ;padding: auto;}*/
+main{
+    height: 80vh;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.rightside{
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70% ;
+    background-color: rgb(47, 47, 182);
+}
+.rightside img{
+    max-width: 1500px;
+    height: auto;
+    width: 100%;
+}
+.leftside{
+    text-transform: uppercase;
+}
+.leftside h1{
+    font-size: 5rem;
+    font-weight: 700;
+    color: rgb(4, 4, 17);
+    position: relative;
+
+}
+.leftside h5{
+    font-size: 5rem;
+    font-weight: 700;
+    color: rgb(28, 10, 10);
+    border-radius: 100% 0% 100% 0% / 100% 0% 100% 0% ;
+    background-color: royalblue;
+}
+.leftside h3 a{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 1rem 2rem;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    margin-top: 2rem;
+    display: inline-block;
+    transition: all 0.3s ease-in-out;
+    position: center;
+}
+.leftside h3 a:hover{
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+}
+body{
+    margin: 0px 50px 0px 50px;
+    /*background-image:url("../img/courses.jpg");*/
+    background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url("../img/courses.jpg");
+    background-color: #1799e4;
+    background-size: cover;
+    background-attachment: fixed;
+    
+    
 }

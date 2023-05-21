@@ -24,17 +24,18 @@
         %>
 
 
-        <h2>Teachers</h2>
+        <h2>Teachers</h2><hr style="height:2px;background-color:black"><br><br>
         <div class="row row-cols-1 row-cols-md-4 g-4" id="card-group">
             <%
                 for (Teacher teacher : teachers) {
             %>
             <div class="col">
                 <div class="card">
-                    <img src="img/RabbiSir.png" class="card-img-top" alt="...">
+                    <img src="img/user.png" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title"><%=teacher.fullName%></h5>
-                        <p class="card-text">Professor</p>
+                        <h5 class="card-title text-white"><%=teacher.fullName%></h5>
+                        <p class="card-text text-white"><%=teacher.position%></p>
+                        <p class="card-text text-white"><%=teacher.dept%></p>
                         <a href="mailto: <%=teacher.email%>" class="btn btn-primary">Mail</a>
                     </div>
                 </div>
@@ -42,38 +43,7 @@
             <%
                 }
             %>
-            <%
-                for (Teacher teacher : teachers) {
-            %>
-            <div class="col">
-                <div class="card">
-                    <img src="img/RabbiSir.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title"><%=teacher.fullName%></h5>
-                        <p class="card-text">Professor</p>
-                        <a href="mailto: <%=teacher.email%>" class="btn btn-primary">Mail</a>
-                    </div>
-                </div>
-            </div>
-            <%
-                }
-            %>
-            <%
-                for (Teacher teacher : teachers) {
-            %>
-            <div class="col">
-                <div class="card">
-                    <img src="img/RabbiSir.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title"><%=teacher.fullName%></h5>
-                        <p class="card-text">Professor</p>
-                        <a href="mailto: <%=teacher.email%>" class="btn btn-primary">Mail</a>
-                    </div>
-                </div>
-            </div>
-            <%
-                }
-            %>
+           
         </div>
 
     </body>

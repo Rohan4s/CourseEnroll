@@ -1,6 +1,6 @@
 <%-- 
     Document   : index
-    Created on : May 12, 2023, 6:40:03 PM
+    Created on : May 2, 2023, 6:40:03 PM
     Author     : rohan
 --%>
 
@@ -32,14 +32,11 @@
                                     <div class="card-body p-md-5 mx-md-4">
 
                                         <div class="text-center">
-                                            <!--                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
-                                                                                             style="width: 185px;" alt="logo">-->
                                             <h2 class="mt-1 mb-5 pb-1">Welcome!</h2>
                                         </div>
 
+                                        <!--Login From-->
                                         <form action="LoginServlet" method="post">
-                                            <!--<p>Please login to your account</p>-->
-
                                             <div class="form-outline mb-4">
                                                 <input type="text" id="form2Example11" class="form-control" name="uname"
                                                        placeholder="username" />
@@ -50,11 +47,21 @@
                                                 <input type="password" id="form2Example22" class="form-control" placeholder="password" name="pass" />
                                                 <label class="form-label" for="form2Example22">Password</label>
                                             </div>
+                                            <%
+                                                if (request.getParameter("err") != null) {
+                                                    String msg = (String) request.getParameter("err");
+                                            %>
+                                            <p class="text-danger">Wrong credentials. Please try again.</p>
+                                            <%
+                                                }
+                                            %>
 
                                             <div class="text-center pt-1 mb-5 pb-1">
                                                 <button type="submit" class="btn btn-primary">Sign In</button>
                                             </div>
                                         </form>
+
+                                        <!--Have an account?-->
                                         <form action="Registration.jsp" method="post">
                                             <div class="d-flex align-items-center justify-content-center pb-4">
                                                 <p class="mb-0 me-2">Don't have an account?</p>

@@ -33,7 +33,6 @@ public class Logout extends HttpServlet {
                 return;
             }
             session.removeAttribute("uname");
-            session.removeAttribute("pass");
             session.invalidate();
             response.sendRedirect("index.jsp");
             out.println("<h1>Servlet Logout at " + request.getContextPath() + "</h1>");
