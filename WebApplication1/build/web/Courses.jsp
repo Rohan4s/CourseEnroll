@@ -59,7 +59,7 @@
         <!--Add new courses by admin -->
         <%if (role.equals("admin")) {%>
         <div class="text-center">
-            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+            <button type="button" class="comic-button" data-bs-toggle="modal" data-bs-target="#addCourseModal">
                 Add Course
             </button>
         </div>
@@ -122,12 +122,12 @@
                     String[] courseCode = course.code.split(" ", 2);
             %>
             <div class="col">
-                <div class="card text-dark bg-primary mb-3" style="min-height: 200px">
-                    <div class="card-body bg-info ">
-                        <h2 class="card-header text-center"><b><%=course.code%>:</b> <%=course.title%></h2>
-                        <div class="card-text text-center  fs-5">Instructor : <%=course.teacherUsername%></div>
-                        <div class="card-text text-center  fs-5">total student</div>
-                        <div class="card-text text-center  fs-5">Credit : <%=course.credit%></div>
+                <div class="card">
+                         <div class="content">
+                        <h2 class="card-header text-center text-white"><b><%=course.code%>:</b> <%=course.title%></h2>
+                        <div class="card-text text-center  fs-5 text-white">Instructor : <%=course.teacherUsername%></div>
+                        <div class="card-text text-center  fs-5 text-white">total student</div>
+                        <div class="card-text text-center  fs-5 text-white">Credit : <%=course.credit%></div>
                     </div>
                 </div>
             </div>
@@ -151,9 +151,9 @@
                     String[] courseCode = course.code.split(" ", 2);
             %>
             <div class="col">
-                <div class="card text-dark bg-primary mb-3" style="min-height: 200px">
-                    <div class="card-body bg-info ">
-                        <h5 class="card-header"><b><%=course.code%>:</b> <%=course.title%></h5>
+                       <div class="card">
+                         <div class="content">
+                        <h5 class="card-header text-white"><b><%=course.code%>:</b> <%=course.title%></h5>
                         <div class="card-text"></div>
 
 
@@ -220,18 +220,17 @@
         %>
 
         <!--- All courses-->
-        <h2 class="text-center text-gray-900 text-white">All Courses</h2><hr style="height:2px;background-color:black"><br>
+        <h2 class="text-center text-gray-900 text-dark">All Courses</h2><hr style="height:2px;background-color:black"><br>
         <div class="row row-cols-1 row-cols-md-4 g-4" id="card-group">
             <%                for (Course course : courses) {
                     String[] courseCode = course.code.split(" ", 2);
             %>
             <div class="col">
-                <div class="card border-light mb-3" style="min-height: 200px">
-                    <div class="card border-light mb-3
-                         ">
-                        <h5 class="card-header text-center text-dark"><%=course.code%>: <%=course.title%></h5>
-                        <div class="card-text text-center mt-2 text-center  fs-4 text-dark">Instructor: <%=course.teacherName%></div>
-                        <div class="card-text text-center text-center  fs-4 text-dark"><%=course.dept%></div>
+                    <div class="card">
+                         <div class="content">
+                        <h5 class="card-header text-center text-white"><%=course.code%>: <%=course.title%></h5>
+                        <div class="card-text text-center mt-2 text-center  fs-4 text-white">Instructor: <%=course.teacherName%></div>
+                        <div class="card-text text-center text-center  fs-4 text-white"><%=course.dept%></div>
 
                         <!--Enroll button-->
                         <%if (role.equals("student") && cd.isEnrolled(registeredCourses, course.code) == false) {%>
