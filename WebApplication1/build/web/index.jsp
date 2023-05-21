@@ -20,7 +20,7 @@
     <body>
         <%
             if (session.getAttribute("uname") != null)
-                response.sendRedirect("welcome.jsp");
+                response.sendRedirect("Home.jsp");
         %>
         <section class="h-100 gradient-form" style="background-color: #eee;">
             <div class="container py-5 h-100">
