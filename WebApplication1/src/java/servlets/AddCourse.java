@@ -49,7 +49,7 @@ public class AddCourse extends HttpServlet {
             // create new course and assign teacher
             CourseDao courseDao = new CourseDao();
             courseDao.addCourse(courseCode,courseTitle,teacherUsername,credit);
-            response.sendRedirect("Courses.jsp");
+            response.sendRedirect("Courses.jsp?add=true");
             
 
             out.println("</body>");

@@ -56,7 +56,23 @@
         <br><br>
 
         <!--Add new courses by admin -->
-        <%if (role.equals("admin")) {%>
+
+        <%
+            if (role.equals("student") && request.getParameter("enrolled") != null) {
+        %>
+        <div class="alert alert-primary text-center" role="alert">
+            Succesfully Enrolled!
+        </div>
+        <%
+            }
+            if (role.equals("admin") && request.getParameter("add") != null) {
+        %>
+        <div class="alert alert-primary text-center" role="alert">
+            Succesfully Created A New Course
+        </div>
+        <%
+            }
+            if (role.equals("admin")) {%>
         <div class="text-center">
             <button type="button" class="comic-button" data-bs-toggle="modal" data-bs-target="#addCourseModal">
                 Add Course

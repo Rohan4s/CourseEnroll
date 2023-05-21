@@ -19,8 +19,17 @@
     </head>
     <body>
         <%
-            if (session.getAttribute("uname") != null)
+            if (session.getAttribute("uname") != null) {
                 response.sendRedirect("Home.jsp");
+            }
+
+            if (request.getParameter("user") != null) {
+
+        %>
+        <div class="alert alert-primary text-center"  role="alert">
+            You registered succesfully!
+        </div>
+        <%            }
         %>
         <section class="h-100 gradient-form" style="background-color: #eee;">
             <div class="container py-5 h-100">

@@ -74,7 +74,7 @@ public class Registration extends HttpServlet {
                 registrationDao.insertToTeacher(userName, fullName, userID, dept,phone,email);
             }
             
-            
+            response.sendRedirect("index.jsp?user=created");
             
             
 //            out.println("<h1>Servlet Registration at " + request.getContextPath() + "</h1>");

@@ -82,7 +82,7 @@ public class EnrollCourse extends HttpServlet {
 
             out.println("</body>");
             out.println("</html>");
-            response.sendRedirect("Courses.jsp");
+            response.sendRedirect("Courses.jsp?enrolled=true");
         }
     }
 
