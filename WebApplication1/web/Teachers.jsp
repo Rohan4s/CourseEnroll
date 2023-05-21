@@ -34,8 +34,8 @@
                     <img src="img/user.png" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title text-white"><%=teacher.fullName%></h5>
-                        <p class="card-text text-white">Professor</p>
-                        <p class="card-text text-white">Department</p>
+                        <p class="card-text text-white"><%=teacher.position%></p>
+                        <p class="card-text text-white"><%=teacher.dept%></p>
                         <a href="mailto: <%=teacher.email%>" class="btn btn-primary">Mail</a>
                     </div>
                 </div>

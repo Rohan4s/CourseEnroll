@@ -93,4 +93,17 @@ public class CourseDao {
         st.executeUpdate();
     }
 
+    public int getNumberOfStudents(String courseID) throws SQLException { // Get all courses available in the university
+        query = "select count(courseID) from takes where courseID=?";
+        Connection con = Jdbc.getConnection();
+        PreparedStatement st = con.prepareStatement(query);
+        st.setString(1, courseID);
+        ResultSet rs = st.executeQuery();
+
+        if (rs.next()) {
+            int cnt = rs.getInt(1);
+            return cnt;
+        }
+        return 0;
+    }
 }

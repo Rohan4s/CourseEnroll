@@ -18,7 +18,7 @@
         <h1>LEARN</h1>
         <h1>CREATE</h1>
         <h1>DEPLOY</h1>
-        <h3><a href="#">Get Started</a></h3>
+        <h3><a href="Courses.jsp">Get Started</a></h3>
       </div>
 
       <div class="rightside">

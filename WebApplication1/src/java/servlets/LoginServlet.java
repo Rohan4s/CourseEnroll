@@ -28,15 +28,16 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = req.getSession();
             String name = req.getParameter("uname");
             String pass = req.getParameter("pass");
+           
             LoginDao loginDao = new LoginDao();
 
             if (loginDao.check(name, pass)) {
+                // insert username and password in session to know if user is logged in
                 session.setAttribute("uname", name);
-                session.setAttribute("pass", pass);
                 session.setAttribute("role",loginDao.getRole());
-                res.sendRedirect("welcome.jsp");
+                res.sendRedirect("Home.jsp");
             } else {
-                res.sendRedirect("index.jsp");
+                res.sendRedirect("index.jsp?err=mismatch");
             }
             out.println("</body>");
             out.println("</html>");

@@ -53,7 +53,6 @@
             }
         %>
 
-
         <br><br>
 
         <!--Add new courses by admin -->
@@ -123,11 +122,11 @@
             %>
             <div class="col">
                 <div class="card">
-                         <div class="content">
-                        <h2 class="card-header text-center text-white"><b><%=course.code%>:</b> <%=course.title%></h2>
-                        <div class="card-text text-center  fs-5 text-white">Instructor : <%=course.teacherUsername%></div>
-                        <div class="card-text text-center  fs-5 text-white">total student</div>
+                    <div class="content">
+                        <h5 class="card-header text-center text-white"><%=course.code%>: <%=course.title%></h5>
                         <div class="card-text text-center  fs-5 text-white">Credit : <%=course.credit%></div>
+                        <div class="card-text text-center fs-5 mt-2 text-center  fs-5 text-white">Instructor: <%=course.teacherUsername%>
+                        </div><div class="card-text text-center  fs-5 text-white mt-1">Total Students: <%=cd.getNumberOfStudents(course.code)%> </div> 
                     </div>
                 </div>
             </div>
@@ -151,18 +150,18 @@
                     String[] courseCode = course.code.split(" ", 2);
             %>
             <div class="col">
-                       <div class="card">
-                         <div class="content">
+                <div class="card">
+                    <div class="content">
                         <h5 class="card-header text-white"><b><%=course.code%>:</b> <%=course.title%></h5>
-                        <div class="card-text"></div>
+                        <div class="card-text text-white fs-5 mt-3">Students Enrolled: <%=cd.getNumberOfStudents(course.code)%></div>
 
 
                         <!--Get Students button-->
                         <br><br>
                         <div class="text-center">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal<%=courseCode[0] + courseCode[1]%>">
-                            Students
-                        </button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal<%=courseCode[0] + courseCode[1]%>">
+                                Students
+                            </button>
                         </div>
                         <%
                             // fetching students enrolled in this course
@@ -220,24 +219,27 @@
         %>
 
         <!--- All courses-->
+        <br>
         <h2 class="text-center text-gray-900 text-dark">All Courses</h2><hr style="height:2px;background-color:black"><br>
         <div class="row row-cols-1 row-cols-md-4 g-4" id="card-group">
             <%                for (Course course : courses) {
                     String[] courseCode = course.code.split(" ", 2);
             %>
             <div class="col">
-                    <div class="card">
-                         <div class="content">
+                <div class="card">
+                    <div class="content">
                         <h5 class="card-header text-center text-white"><%=course.code%>: <%=course.title%></h5>
-                        <div class="card-text text-center mt-2 text-center  fs-4 text-white">Instructor: <%=course.teacherName%></div>
-                        <div class="card-text text-center text-center  fs-4 text-white"><%=course.dept%></div>
+                        <div class="card-text text-center mt-2 text-center  fs-5 text-white">Instructor: <%=course.teacherName%></div>
+                        <div class="card-text text-center text-center  fs-5 text-white"><%=course.dept%></div>
 
                         <!--Enroll button-->
-                        <%if (role.equals("student") && cd.isEnrolled(registeredCourses, course.code) == false) {%>
-                        <div class="text-center">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal<%=courseCode[0] + courseCode[1]%>">
-                            Enroll
-                        </button>
+                        <%
+                            if (role.equals("student") && cd.isEnrolled(registeredCourses, course.code) == false) {
+                        %>
+                        <div class="text-center mt-3">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal<%=courseCode[0] + courseCode[1]%>">
+                                Enroll
+                            </button>
                         </div>
 
                         <!--Enroll button calls this modal-->
@@ -254,6 +256,13 @@
                                 </div>
                             </div>
                         </div>
+                        <!--If student is already enrolled-->
+                        <%
+                        } else if (role.equals("student") && cd.isEnrolled(registeredCourses, course.code) == true) {
+                        %>
+                        <button type="button" class="btn btn-info mt-3">
+                            Enrolled
+                        </button>
                         <%}%>
                     </div>
                 </div>
