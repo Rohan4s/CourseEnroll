@@ -16,18 +16,17 @@
             String name = sessionData.getUname(request);
         %>
         <div class="m-4">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top">
                 <div class="container-fluid">
-                    <a href="Home.jsp" class="navbar-brand">Home</a>
+                    <a href="Home.jsp" class="nav-item nav-link text-white">Home</a>
                     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav">
                             <a href="#" class="nav-item nav-link active">About Us</a>
-                            <a href="Courses.jsp" class="nav-item nav-link">Courses</a>
-
-                            <a href="Teachers.jsp" class="nav-item nav-link " tabindex="-1">Teachers</a>
+                            <a href="Courses.jsp" class="nav-item nav-link text-white">Courses</a>
+                            <a href="Teachers.jsp" class="nav-item nav-link text-white" tabindex="-1">Teachers</a>
                         </div>
                         <div class="nav-item dropdown ms-auto">
                             <a href="#" class="nav-link dropdown-toggle link-light" data-bs-toggle="dropdown" ><%=name%></a>   
